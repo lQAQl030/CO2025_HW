@@ -24,17 +24,24 @@ module Forwarding_Unit (
         ex_ForwardA = 2'b00;
         ex_ForwardB = 2'b00;
 
-        // Forwarding for source register Rs
-        if (EX_MEM_RegWrite && (EX_MEM_Rd != 0) && (EX_MEM_Rd == ID_EX_Rs))
-            ForwardA = 2'b10;
-        else if (MEM_WB_RegWrite && (MEM_WB_Rd != 0) && (MEM_WB_Rd == ID_EX_Rs))
-            ForwardA = 2'b01;
+        // Forwarding for source register rs1
+        if ((mem_RegWrite) && (mem_Rd != 0) && (ex_R1 == mem_Rd))
+            ex_ForwardA = 2'b10;
+        else if ((wb_RegWrite) && (wb_Rd != 0) && (ex_R1 == wb_Rd))
+            ex_ForwardA = 2'b01;
 
-        // Forwarding for source register Rt
-        if (EX_MEM_RegWrite && (EX_MEM_Rd != 0) && (EX_MEM_Rd == ID_EX_Rt))
-            ForwardB = 2'b10;
-        else if (MEM_WB_RegWrite && (MEM_WB_Rd != 0) && (MEM_WB_Rd == ID_EX_Rt))
-            ForwardB = 2'b01;
+        if ((mem_RegWrite) && (mem_Rd != 0) && (id_R1 == mem_Rd))
+            id_ForwardA = 1;
+
+        // Forwarding for source register rs2
+        if ((mem_RegWrite) && (mem_Rd != 0) && (ex_R2 == mem_Rd))
+            ex_ForwardB = 2'b10;
+        else if ((wb_RegWrite) && (wb_Rd != 0) && (ex_R2 == wb_Rd))
+            ex_ForwardB = 2'b01;
+
+        if ((mem_RegWrite) && (mem_Rd != 0) && (id_R2 == mem_Rd))
+            id_ForwardB = 1;
+
     end
 
     // Hint:

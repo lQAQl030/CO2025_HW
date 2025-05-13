@@ -24,16 +24,16 @@ void VPipelineCPU___024root___eval_triggers__act(VPipelineCPU___024root* vlSelf)
                                        & (IData)(vlSelf->__Vtrigrprev__TOP__clk)) 
                                       | ((~ (IData)(vlSelf->start)) 
                                          & (IData)(vlSelf->__Vtrigrprev__TOP__start)));
-    vlSelf->__VactTriggered.at(2U) = ((vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__address 
-                                       != vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_DataMemory__address) 
-                                      | ((IData)(vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead) 
-                                         != (IData)(vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead)));
+    vlSelf->__VactTriggered.at(2U) = (((IData)(vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead)) 
+                                      | (vlSelf->PipelineCPU__DOT____Vcellinp__m_Mux_BranchA__s1 
+                                         != vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_Mux_BranchA__s1));
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
     vlSelf->__Vtrigrprev__TOP__start = vlSelf->start;
-    vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_DataMemory__address 
-        = vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__address;
     vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead 
         = vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead;
+    vlSelf->__Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_Mux_BranchA__s1 
+        = vlSelf->PipelineCPU__DOT____Vcellinp__m_Mux_BranchA__s1;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
         vlSelf->__VactDidInit = 1U;
         vlSelf->__VactTriggered.at(2U) = 1U;

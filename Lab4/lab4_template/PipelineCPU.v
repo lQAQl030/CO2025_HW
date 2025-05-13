@@ -97,9 +97,42 @@ Register m_Register(
 assign r = m_Register.regs;
 // ======= for vaildation =======
 
+wire id_ForwardA, id_ForwardB;
+wire [1:0] ex_ForwardA, ex_ForwardB;
+Forwarding_Unit FW_Unit(
+    .id_R1(IF_ID[19:15]),    // Source register 1 in ID stage
+    .id_R2(IF_ID[24:20]),    // Source register 2 in ID stage
+    .ex_R1(ID_EX[19:15]),    // Source register 1 in EX stage
+    .ex_R2(ID_EX[24:20]),    // Source register 2 in EX stage
+    .mem_Rd(EX_MEM[11:7]),    // Destination register in MEM stage
+    .wb_Rd(MEM_WB[11:7]),    // Destination register in WB stage
+    .mem_RegWrite(EX_MEM[132]),    // Register write signal in MEM stage
+    .wb_RegWrite(MEM_WB[130]),    // Register write signal in WB stage
+    .id_ForwardA(id_ForwardA),     // Forward control for source 1 in ID stage
+    .id_ForwardB(id_ForwardB),      // Forward control for source 2 in ID stage
+    .ex_ForwardA(ex_ForwardA),     // Forward control for source 1 in EX stage
+    .ex_ForwardB(ex_ForwardB)      // Forward control for source 2 in EX stage
+);
+
+// Branch Mux
+wire [31:0] BranchA, BranchB;
+Mux2to1 #(.size(32)) m_Mux_BranchA(
+    .sel(id_ForwardA),
+    .s0(readData1),
+    .s1(EX_MEM[95:64]),
+    .out(BranchA)
+);
+
+Mux2to1 #(.size(32)) m_Mux_BranchB(
+    .sel(id_ForwardB),
+    .s0(readData2),
+    .s1(EX_MEM[95:64]),
+    .out(BranchB)
+);
+
 BranchComp m_BranchComp(
-    .A(readData1),
-    .B(readData2),
+    .A(BranchA),
+    .B(BranchB),
     .BrEq(BrEq),
     .BrLT(BrLT)
 );
@@ -121,7 +154,7 @@ wire [31:0] branch_adder_input;
 Mux2to1 #(.size(32)) m_Mux_jalr(
     .sel(PCorR1),
     .s0(IF_ID[63:32]),
-    .s1(readData1),
+    .s1(BranchA),
     .out(branch_adder_input)
 );
 
@@ -150,19 +183,36 @@ Pipeline_Register #(.WIDTH(168)) m_ID_EX(
 
         // pipe reg
         IF_ID[95:64],  // PCPlus4   159:128
-        readData1,     // readData1 127:96
-        readData2,     // readData2 95:64
+        BranchA,     // readData1 127:96
+        BranchB,     // readData2 95:64
         imm,           // imm       63:32
         IF_ID[31:0]    // inst      31:0
     }), 
     .data_o(ID_EX)
 );
 
+// Forward Mux
+wire [31:0] ForwardA, ForwardB;
+Mux3to1 #(.size(32)) m_Mux_ForwardA(
+    .sel(ex_ForwardA),
+    .s0(ID_EX[127:96]),
+    .s1(writeData),
+    .s2(EX_MEM[95:64]),
+    .out(ForwardA)
+);
+
+Mux3to1 #(.size(32)) m_Mux_ForwardB(
+    .sel(ex_ForwardB),
+    .s0(ID_EX[95:64]),
+    .s1(writeData),
+    .s2(EX_MEM[95:64]),
+    .out(ForwardB)
+);
 
 wire [31:0] ALUSrcB;
 Mux2to1 #(.size(32)) m_Mux_ALU(
     .sel(ID_EX[160]),
-    .s0(ID_EX[95:64]),
+    .s0(ForwardB),
     .s1(ID_EX[63:32]),
     .out(ALUSrcB)
 );
@@ -179,7 +229,7 @@ wire [31:0] ALUOut;
 wire zero;
 ALU m_ALU(
     .ALUctl(ALUCtl),
-    .A(ID_EX[127:96]),
+    .A(ForwardA),
     .B(ALUSrcB),
     .ALUOut(ALUOut),
     .zero(zero)
@@ -202,7 +252,7 @@ Pipeline_Register #(.WIDTH(133)) m_EX_MEM (
         // pipe reg
         ID_EX[159:128], // PCPlus4      127:96
         ALUOut,         // ALUOut       95:64
-        ID_EX[95:64],   // readData2    63:32
+        ForwardB,   // readData2    63:32
         ID_EX[31:0]     // inst         31:0
     }),
     .data_o(EX_MEM)
