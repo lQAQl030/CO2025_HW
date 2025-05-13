@@ -15,7 +15,7 @@ class VPipelineCPU___024root final : public VerilatedModule {
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);
     VL_IN8(start,0,0);
-    CData/*0:0*/ PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead;
+    CData/*0:0*/ PipelineCPU__DOT____Vcellinp__HD_Unit__mem_memRead;
     CData/*0:0*/ PipelineCPU__DOT__BrEq;
     CData/*0:0*/ PipelineCPU__DOT__BrLT;
     CData/*0:0*/ PipelineCPU__DOT__memRead;
@@ -24,9 +24,12 @@ class VPipelineCPU___024root final : public VerilatedModule {
     CData/*0:0*/ PipelineCPU__DOT__regWrite;
     CData/*0:0*/ PipelineCPU__DOT__Flush_ctrl;
     CData/*0:0*/ PipelineCPU__DOT__PCorR1;
+    CData/*0:0*/ PipelineCPU__DOT__BranchOrJump;
     CData/*1:0*/ PipelineCPU__DOT__memtoReg;
     CData/*1:0*/ PipelineCPU__DOT__ALUOp;
     CData/*1:0*/ PipelineCPU__DOT__PCSel;
+    CData/*0:0*/ PipelineCPU__DOT__RePC;
+    CData/*0:0*/ PipelineCPU__DOT__Flush_HD;
     CData/*0:0*/ PipelineCPU__DOT__id_ForwardA;
     CData/*0:0*/ PipelineCPU__DOT__id_ForwardB;
     CData/*1:0*/ PipelineCPU__DOT__ex_ForwardA;
@@ -44,10 +47,10 @@ class VPipelineCPU___024root final : public VerilatedModule {
     CData/*0:0*/ __Vdlyvset__PipelineCPU__DOT__m_DataMemory__DOT__data_memory__v4;
     CData/*0:0*/ __Vtrigrprev__TOP__clk;
     CData/*0:0*/ __Vtrigrprev__TOP__start;
-    CData/*0:0*/ __Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead;
+    CData/*0:0*/ __Vtrigrprev__TOP__PipelineCPU__DOT____Vcellinp__HD_Unit__mem_memRead;
     CData/*0:0*/ __VactDidInit;
     CData/*0:0*/ __VactContinue;
-    IData/*31:0*/ PipelineCPU__DOT__pc_i;
+    IData/*31:0*/ PipelineCPU__DOT__pc_RePC;
     IData/*31:0*/ PipelineCPU__DOT__pc_o;
     VlWide<3>/*95:0*/ PipelineCPU__DOT__IF_ID;
     IData/*31:0*/ PipelineCPU__DOT__writeData;

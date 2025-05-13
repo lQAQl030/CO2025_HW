@@ -47,32 +47,46 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__0(VPipelineCPU___0
             vlSelf->__Vdlyvdim0__PipelineCPU__DOT__m_DataMemory__DOT__data_memory__v3 
                 = (0x7fU & vlSelf->PipelineCPU__DOT____Vcellinp__m_Mux_BranchA__s1);
         }
-        vlSelf->PipelineCPU__DOT__ID_EX[0U] = vlSelf->PipelineCPU__DOT__IF_ID[0U];
-        vlSelf->PipelineCPU__DOT__ID_EX[1U] = vlSelf->PipelineCPU__DOT__imm;
-        vlSelf->PipelineCPU__DOT__ID_EX[2U] = vlSelf->PipelineCPU__DOT__BranchB;
-        vlSelf->PipelineCPU__DOT__ID_EX[3U] = (IData)(
-                                                      (((QData)((IData)(
-                                                                        vlSelf->PipelineCPU__DOT__IF_ID[2U])) 
-                                                        << 0x20U) 
-                                                       | (QData)((IData)(vlSelf->PipelineCPU__DOT__BranchA))));
-        vlSelf->PipelineCPU__DOT__ID_EX[4U] = (IData)(
-                                                      ((((QData)((IData)(
-                                                                         vlSelf->PipelineCPU__DOT__IF_ID[2U])) 
-                                                         << 0x20U) 
-                                                        | (QData)((IData)(vlSelf->PipelineCPU__DOT__BranchA))) 
-                                                       >> 0x20U));
-        vlSelf->PipelineCPU__DOT__ID_EX[5U] = (((IData)(vlSelf->PipelineCPU__DOT__regWrite) 
-                                                << 7U) 
-                                               | (((IData)(vlSelf->PipelineCPU__DOT__memtoReg) 
-                                                   << 5U) 
-                                                  | (((IData)(vlSelf->PipelineCPU__DOT__memWrite) 
-                                                      << 4U) 
-                                                     | (((IData)(vlSelf->PipelineCPU__DOT__memRead) 
-                                                         << 3U) 
-                                                        | (((IData)(vlSelf->PipelineCPU__DOT__ALUOp) 
-                                                            << 1U) 
-                                                           | (IData)(vlSelf->PipelineCPU__DOT__ALUSrc))))));
+        if (vlSelf->PipelineCPU__DOT__Flush_HD) {
+            vlSelf->PipelineCPU__DOT__ID_EX[0U] = 0U;
+            vlSelf->PipelineCPU__DOT__ID_EX[1U] = 0U;
+            vlSelf->PipelineCPU__DOT__ID_EX[2U] = 0U;
+            vlSelf->PipelineCPU__DOT__ID_EX[3U] = 0U;
+            vlSelf->PipelineCPU__DOT__ID_EX[4U] = 0U;
+            vlSelf->PipelineCPU__DOT__ID_EX[5U] = 0U;
+        } else {
+            vlSelf->PipelineCPU__DOT__ID_EX[0U] = vlSelf->PipelineCPU__DOT__IF_ID[0U];
+            vlSelf->PipelineCPU__DOT__ID_EX[1U] = vlSelf->PipelineCPU__DOT__imm;
+            vlSelf->PipelineCPU__DOT__ID_EX[2U] = vlSelf->PipelineCPU__DOT__BranchB;
+            vlSelf->PipelineCPU__DOT__ID_EX[3U] = (IData)(
+                                                          (((QData)((IData)(
+                                                                            vlSelf->PipelineCPU__DOT__IF_ID[2U])) 
+                                                            << 0x20U) 
+                                                           | (QData)((IData)(vlSelf->PipelineCPU__DOT__BranchA))));
+            vlSelf->PipelineCPU__DOT__ID_EX[4U] = (IData)(
+                                                          ((((QData)((IData)(
+                                                                             vlSelf->PipelineCPU__DOT__IF_ID[2U])) 
+                                                             << 0x20U) 
+                                                            | (QData)((IData)(vlSelf->PipelineCPU__DOT__BranchA))) 
+                                                           >> 0x20U));
+            vlSelf->PipelineCPU__DOT__ID_EX[5U] = (
+                                                   ((IData)(vlSelf->PipelineCPU__DOT__regWrite) 
+                                                    << 7U) 
+                                                   | (((IData)(vlSelf->PipelineCPU__DOT__memtoReg) 
+                                                       << 5U) 
+                                                      | (((IData)(vlSelf->PipelineCPU__DOT__memWrite) 
+                                                          << 4U) 
+                                                         | (((IData)(vlSelf->PipelineCPU__DOT__memRead) 
+                                                             << 3U) 
+                                                            | (((IData)(vlSelf->PipelineCPU__DOT__ALUOp) 
+                                                                << 1U) 
+                                                               | (IData)(vlSelf->PipelineCPU__DOT__ALUSrc))))));
+        }
         if (vlSelf->PipelineCPU__DOT__Flush_ctrl) {
+            vlSelf->PipelineCPU__DOT__IF_ID[0U] = 0U;
+            vlSelf->PipelineCPU__DOT__IF_ID[1U] = 0U;
+            vlSelf->PipelineCPU__DOT__IF_ID[2U] = 0U;
+        } else if (vlSelf->PipelineCPU__DOT__Flush_HD) {
             vlSelf->PipelineCPU__DOT__IF_ID[0U] = 0U;
             vlSelf->PipelineCPU__DOT__IF_ID[1U] = 0U;
             vlSelf->PipelineCPU__DOT__IF_ID[2U] = 0U;
@@ -118,7 +132,7 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__0(VPipelineCPU___0
                                                             | (QData)((IData)(vlSelf->PipelineCPU__DOT__pc_o))) 
                                                            >> 0x20U));
         }
-        vlSelf->PipelineCPU__DOT__pc_o = vlSelf->PipelineCPU__DOT__pc_i;
+        vlSelf->PipelineCPU__DOT__pc_o = vlSelf->PipelineCPU__DOT__pc_RePC;
     } else {
         vlSelf->__Vdlyvset__PipelineCPU__DOT__m_DataMemory__DOT__data_memory__v4 = 1U;
         vlSelf->PipelineCPU__DOT__ID_EX[0U] = 0U;
@@ -141,11 +155,28 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__0(VPipelineCPU___0
                                                 >> 1U))));
     vlSelf->PipelineCPU__DOT__ALUCtl = VPipelineCPU__ConstPool__TABLE_hce8e8822_0
         [__Vtableidx1];
-    vlSelf->PipelineCPU__DOT__memRead = 0U;
     vlSelf->PipelineCPU__DOT__ALUSrc = 0U;
     vlSelf->PipelineCPU__DOT__memWrite = 0U;
+    vlSelf->PipelineCPU__DOT__ALUOp = 0U;
+    vlSelf->PipelineCPU__DOT__memRead = 0U;
     if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
                   >> 6U)))) {
+        if ((0x20U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
+            if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                          >> 4U)))) {
+                if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                              >> 3U)))) {
+                    if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                  >> 2U)))) {
+                        if ((2U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
+                            if ((1U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
+                                vlSelf->PipelineCPU__DOT__memWrite = 1U;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
                       >> 5U)))) {
             if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
@@ -163,27 +194,11 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__0(VPipelineCPU___0
                 }
             }
         }
-        if ((0x20U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
-            if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
-                          >> 4U)))) {
-                if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
-                              >> 3U)))) {
-                    if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
-                                  >> 2U)))) {
-                        if ((2U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
-                            if ((1U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
-                                vlSelf->PipelineCPU__DOT__memWrite = 1U;
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
-    vlSelf->PipelineCPU__DOT__ALUOp = 0U;
     vlSelf->PipelineCPU__DOT__memtoReg = 0U;
     vlSelf->PipelineCPU__DOT__regWrite = 0U;
     vlSelf->PipelineCPU__DOT__PCorR1 = 0U;
+    vlSelf->PipelineCPU__DOT__BranchOrJump = 0U;
     if ((0x40U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
         if ((0x20U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
             if ((1U & (~ (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
@@ -213,6 +228,7 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__0(VPipelineCPU___0
                             if ((1U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
                                 vlSelf->PipelineCPU__DOT__memtoReg = 2U;
                                 vlSelf->PipelineCPU__DOT__regWrite = 1U;
+                                vlSelf->PipelineCPU__DOT__BranchOrJump = 1U;
                             }
                         }
                     }
@@ -221,7 +237,12 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__0(VPipelineCPU___0
                         if ((1U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
                             vlSelf->PipelineCPU__DOT__memtoReg = 2U;
                             vlSelf->PipelineCPU__DOT__regWrite = 1U;
+                            vlSelf->PipelineCPU__DOT__BranchOrJump = 1U;
                         }
+                    }
+                } else if ((2U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
+                    if ((1U & vlSelf->PipelineCPU__DOT__IF_ID[0U])) {
+                        vlSelf->PipelineCPU__DOT__BranchOrJump = 1U;
                     }
                 }
             }
@@ -681,7 +702,7 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__3(VPipelineCPU___0
     VPipelineCPU__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VPipelineCPU___024root___nba_sequent__TOP__3\n"); );
     // Body
-    if (vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead) {
+    if (vlSelf->PipelineCPU__DOT____Vcellinp__HD_Unit__mem_memRead) {
         vlSelf->PipelineCPU__DOT__memData = ((0xffffffU 
                                               & vlSelf->PipelineCPU__DOT__memData) 
                                              | (vlSelf->PipelineCPU__DOT__m_DataMemory__DOT__data_memory
@@ -719,8 +740,6 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__4(VPipelineCPU___0
     VlWide<3>/*95:0*/ __Vtemp_h8680de54__0;
     IData/*31:0*/ __Vilp;
     // Body
-    vlSelf->PipelineCPU__DOT____Vcellinp__m_DataMemory__memRead 
-        = (1U & vlSelf->PipelineCPU__DOT__EX_MEM[4U]);
     if (vlSelf->__Vdlyvset__PipelineCPU__DOT__m_DataMemory__DOT__data_memory__v0) {
         vlSelf->PipelineCPU__DOT__m_DataMemory__DOT__data_memory[vlSelf->__Vdlyvdim0__PipelineCPU__DOT__m_DataMemory__DOT__data_memory__v0] 
             = vlSelf->__Vdlyvval__PipelineCPU__DOT__m_DataMemory__DOT__data_memory__v0;
@@ -738,8 +757,46 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_sequent__TOP__4(VPipelineCPU___0
             __Vilp = ((IData)(1U) + __Vilp);
         }
     }
+    vlSelf->PipelineCPU__DOT____Vcellinp__HD_Unit__mem_memRead 
+        = (1U & vlSelf->PipelineCPU__DOT__EX_MEM[4U]);
     vlSelf->PipelineCPU__DOT____Vcellinp__m_Mux_BranchA__s1 
         = vlSelf->PipelineCPU__DOT__EX_MEM[2U];
+    vlSelf->PipelineCPU__DOT__Flush_HD = 0U;
+    vlSelf->PipelineCPU__DOT__RePC = 0U;
+    if (((vlSelf->PipelineCPU__DOT__ID_EX[5U] >> 3U) 
+         & (((0x1fU & (vlSelf->PipelineCPU__DOT__ID_EX[0U] 
+                       >> 7U)) == (0x1fU & (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                            >> 0xfU))) 
+            | ((0x1fU & (vlSelf->PipelineCPU__DOT__ID_EX[0U] 
+                         >> 7U)) == (0x1fU & (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                              >> 0x14U)))))) {
+        vlSelf->PipelineCPU__DOT__Flush_HD = 1U;
+        vlSelf->PipelineCPU__DOT__RePC = 1U;
+    } else if ((((IData)(vlSelf->PipelineCPU__DOT__BranchOrJump) 
+                 & (IData)(vlSelf->PipelineCPU__DOT____Vcellinp__HD_Unit__mem_memRead)) 
+                & (((0x1fU & (vlSelf->PipelineCPU__DOT__EX_MEM[0U] 
+                              >> 7U)) == (0x1fU & (
+                                                   vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                                   >> 0xfU))) 
+                   | ((0x1fU & (vlSelf->PipelineCPU__DOT__EX_MEM[0U] 
+                                >> 7U)) == (0x1fU & 
+                                            (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                             >> 0x14U)))))) {
+        vlSelf->PipelineCPU__DOT__Flush_HD = 1U;
+        vlSelf->PipelineCPU__DOT__RePC = 1U;
+    } else if ((((IData)(vlSelf->PipelineCPU__DOT__BranchOrJump) 
+                 & (vlSelf->PipelineCPU__DOT__ID_EX[5U] 
+                    >> 7U)) & (((0x1fU & (vlSelf->PipelineCPU__DOT__ID_EX[0U] 
+                                          >> 7U)) == 
+                                (0x1fU & (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                          >> 0xfU))) 
+                               | ((0x1fU & (vlSelf->PipelineCPU__DOT__ID_EX[0U] 
+                                            >> 7U)) 
+                                  == (0x1fU & (vlSelf->PipelineCPU__DOT__IF_ID[0U] 
+                                               >> 0x14U)))))) {
+        vlSelf->PipelineCPU__DOT__Flush_HD = 1U;
+        vlSelf->PipelineCPU__DOT__RePC = 1U;
+    }
     vlSelf->PipelineCPU__DOT__ForwardA = ((0U == (IData)(vlSelf->PipelineCPU__DOT__ex_ForwardA))
                                            ? vlSelf->PipelineCPU__DOT__ID_EX[3U]
                                            : ((1U == (IData)(vlSelf->PipelineCPU__DOT__ex_ForwardA))
@@ -1009,16 +1066,21 @@ VL_INLINE_OPT void VPipelineCPU___024root___nba_comb__TOP__0(VPipelineCPU___024r
             }
         }
     }
-    vlSelf->PipelineCPU__DOT__pc_i = ((1U & (IData)(vlSelf->PipelineCPU__DOT__PCSel))
-                                       ? (((IData)(vlSelf->PipelineCPU__DOT__PCorR1)
-                                            ? vlSelf->PipelineCPU__DOT__BranchA
-                                            : vlSelf->PipelineCPU__DOT__IF_ID[1U]) 
-                                          + ((IData)(vlSelf->PipelineCPU__DOT__PCorR1)
-                                              ? vlSelf->PipelineCPU__DOT__imm
-                                              : (vlSelf->PipelineCPU__DOT__imm 
-                                                 << 1U)))
-                                       : ((IData)(4U) 
-                                          + vlSelf->PipelineCPU__DOT__pc_o));
+    vlSelf->PipelineCPU__DOT__pc_RePC = ((IData)(vlSelf->PipelineCPU__DOT__RePC)
+                                          ? vlSelf->PipelineCPU__DOT__IF_ID[1U]
+                                          : ((1U & (IData)(vlSelf->PipelineCPU__DOT__PCSel))
+                                              ? (((IData)(vlSelf->PipelineCPU__DOT__PCorR1)
+                                                   ? vlSelf->PipelineCPU__DOT__BranchA
+                                                   : 
+                                                  vlSelf->PipelineCPU__DOT__IF_ID[1U]) 
+                                                 + 
+                                                 ((IData)(vlSelf->PipelineCPU__DOT__PCorR1)
+                                                   ? vlSelf->PipelineCPU__DOT__imm
+                                                   : 
+                                                  (vlSelf->PipelineCPU__DOT__imm 
+                                                   << 1U)))
+                                              : ((IData)(4U) 
+                                                 + vlSelf->PipelineCPU__DOT__pc_o)));
 }
 
 void VPipelineCPU___024root___eval_nba(VPipelineCPU___024root* vlSelf) {
