@@ -22,7 +22,11 @@ private:
     Cache *cache;
     unsigned int size;       // bytes
     unsigned int tag_bits;
-    std::pair<unsigned, unsigned> directed_map(unsigned int addr);
+    unsigned int ways;
+    unsigned int sets;
+    unsigned int lru;
+    std::vector<unsigned int> LRU;
+    std::pair<unsigned, unsigned> set_associative(unsigned int addr);
 
 public:
 
